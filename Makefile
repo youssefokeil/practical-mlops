@@ -23,10 +23,10 @@ format:
 	./$(VENV_DIR)/bin/black .
 
 lint:
-	pylint --disable=R,C remainder.py
+	./$(VENV_DIR)/bin/pylint --disable=R,C remainder.py
 
 test:
-	python -m pytest -vv --cov=remainder test_remainder.py
+	./$(VENV_DIR)/bin/pytest -vv --cov=remainder ./test_remainder.py
 
 all: venv install install-dev format lint test
 
