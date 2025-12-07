@@ -1,9 +1,33 @@
-make install:
-pip install --upgrade pip &&\
-pip install -r requirements.txt
+.PHONY: venv install install-dev format lint test all
 
-make lint:
-pylint --disable=R,C remainder.py
+VENV_DIR = .venv
 
-make test:
-python -m test -vv --cov=remainder remainder.py
+venv:
+	python3 -m venv $(VENV_DIR)
+
+	@echo "Virtual Environment Installed, activate it!"
+
+install:
+	./$(VENV_DIR)/bin/pip install --upgrade pip &&\
+		./$(VENV_DIR)/bin/pip install -r requirements.txt
+
+	@echo "Installed the project dependencies successfully"
+
+install-dev:
+	./$(VENV_DIR)/bin/pip install --upgrade pip &&\
+		./$(VENV_DIR)/bin/pip install -r requirements-dev.txt
+
+	@echo "Installed the development dependencies successfully."
+
+format:
+	./$(VENV_DIR)/bin/black .
+
+lint:
+	pylint --disable=R,C remainder.py.PHONY: all venv install format lint test
+
+test:
+	python -m pytest -vv --cov=remainder test_remainder.py
+
+all: venv install format lint test
+
+	@echo "Everything is executed"
