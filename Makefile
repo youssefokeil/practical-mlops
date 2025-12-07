@@ -23,11 +23,11 @@ format:
 	./$(VENV_DIR)/bin/black .
 
 lint:
-	pylint --disable=R,C remainder.py.PHONY: all venv install format lint test
+	pylint --disable=R,C remainder.py
 
 test:
 	python -m pytest -vv --cov=remainder test_remainder.py
 
-all: venv install format lint test
+all: venv install install-dev format lint test
 
 	@echo "Everything is executed"
